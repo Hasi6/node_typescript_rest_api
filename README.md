@@ -1,3 +1,8 @@
+# To Start
+
+npm i --save <br />
+npm start <br />
+
 # End Points
 
 http://localhost:5000
