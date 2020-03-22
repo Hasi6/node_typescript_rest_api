@@ -57,3 +57,23 @@ exports.findAllUsersRoute = function (req, res) { return __awaiter(void 0, void 
         }
     });
 }); };
+exports.findDefaultUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var perPage, page, users, err_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                perPage = 20;
+                page = 1;
+                return [4 /*yield*/, findUser.findAllUsers(perPage, page)];
+            case 1:
+                users = _a.sent();
+                return [2 /*return*/, res.status(200).json({ users: users })];
+            case 2:
+                err_2 = _a.sent();
+                console.error(err_2.message);
+                return [2 /*return*/, res.status(500).json({ errors: [{ msg: "Internal Server Error" }] })];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
