@@ -6,3 +6,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./controller/controller"));
 __export(require("./routes/routes"));
 __export(require("./Use/Use"));
+__export(require("./validator/bodyValidator"));

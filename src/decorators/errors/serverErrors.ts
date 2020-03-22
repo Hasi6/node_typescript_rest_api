@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Response, Request, NextFunction } from "express";
 
 export function serverErrors(res: Response) {
   return function(target: any, key: string, desc: PropertyDescriptor): void {

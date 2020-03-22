@@ -1,6 +1,15 @@
 import { Request, Response, NextFunction } from "express";
-import { Get, Post, Put, Delete, Controller, use } from "../../decorators";
+import {
+  Get,
+  Post,
+  Put,
+  Delete,
+  Controller,
+  use,
+  bodyValidator
+} from "../../decorators";
 import { DeleteUser, SaveUser, FindUser, EditUser } from "../../database";
+import { serverErrors } from "../../decorators/errors/serverErrors";
 
 const findUser = new FindUser();
 const removeUser = new DeleteUser();
@@ -8,13 +17,14 @@ const saveUser = new SaveUser();
 const editUser = new EditUser();
 
 function logger(req: Request, res: Response, next: NextFunction) {
-  console.log("Hasi");
+  console.log("Hasi123");
   next();
 }
 
 @Controller("/users")
 class UserController {
   // Default Users With Pagination
+
   @Get("/")
   @use(logger)
   async getUsers(req: Request, res: Response): Promise<Response> {
@@ -51,6 +61,7 @@ class UserController {
 
   //   Add User
   @Post("/")
+  @bodyValidator("email", "firstName", "gender", "age", "height")
   async addUser(req: Request, res: Response): Promise<Response> {
     const { email, firstName, image, age, height, gender } = req.body;
     if (gender !== "male" && gender !== "female" && gender !== "other") {

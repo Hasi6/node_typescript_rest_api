@@ -52,7 +52,7 @@ var removeUser = new database_1.DeleteUser();
 var saveUser = new database_1.SaveUser();
 var editUser = new database_1.EditUser();
 function logger(req, res, next) {
-    console.log("Hasi");
+    console.log("Hasi123");
     next();
 }
 var UserController = /** @class */ (function () {
@@ -243,6 +243,7 @@ var UserController = /** @class */ (function () {
     ], UserController.prototype, "getUsersWithPagination", null);
     __decorate([
         decorators_1.Post("/"),
+        decorators_1.bodyValidator("email", "firstName", "gender", "age", "height"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", Promise)
