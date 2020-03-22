@@ -37,21 +37,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
-var User = mongoose_1.model('users');
+var User = mongoose_1.model("users");
 var FindUser = /** @class */ (function () {
     function FindUser() {
         var _this = this;
         // find User by Id
         this.findUserById = function (id) { return __awaiter(_this, void 0, void 0, function () {
-            var album, err_1;
+            var user, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, User.findById(id)];
                     case 1:
-                        album = _a.sent();
-                        return [2 /*return*/, album];
+                        user = _a.sent();
+                        return [2 /*return*/, user];
                     case 2:
                         err_1 = _a.sent();
                         console.error(err_1.message);
@@ -93,11 +93,12 @@ var FindUser = /** @class */ (function () {
                         if (pages < page) {
                             return [2 /*return*/, { msg: "Only " + pages + " pages found" }];
                         }
-                        return [4 /*yield*/, User.find().sort({ createdAt: -1 }).skip(Math.abs(perPage * page - perPage))
+                        return [4 /*yield*/, User.find()
+                                .sort({ createdAt: -1 })
+                                .skip(Math.abs(perPage * page - perPage))
                                 .limit(perPage)];
                     case 2:
                         users = _a.sent();
-                        console.log(users);
                         return [2 /*return*/, { users: users, numberOfUser: numberOfUser, pages: pages, currentPage: page }];
                     case 3:
                         err_3 = _a.sent();
@@ -117,7 +118,9 @@ var FindUser = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, User.find({ $and: [{ firstName: searchWord }, { age: age }] })];
+                        return [4 /*yield*/, User.find({
+                                $and: [{ firstName: searchWord }, { age: age }]
+                            })];
                     case 2:
                         users = _a.sent();
                         return [2 /*return*/, users];
