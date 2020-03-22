@@ -50,6 +50,7 @@ var database_1 = require("../../database");
 var findUser = new database_1.FindUser();
 var removeUser = new database_1.DeleteUser();
 var saveUser = new database_1.SaveUser();
+var editUser = new database_1.EditUser();
 var UserController = /** @class */ (function () {
     function UserController() {
     }
@@ -150,10 +151,49 @@ var UserController = /** @class */ (function () {
             });
         });
     };
-    //   Delete User
-    UserController.prototype.deleteUserasync = function (req, res) {
+    //   Edit User
+    UserController.prototype.ediUser = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var message, id, user, isDeleted, err_4;
+            var id, body, gender, user, editedUser, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        id = req.params.id;
+                        body = req.body;
+                        gender = body.gender;
+                        delete body.email;
+                        delete body._id;
+                        if (gender !== "male" && gender !== "female" && gender !== "other") {
+                            return [2 /*return*/, res.status(404).json({
+                                    errors: [{ msg: "Gender is Invalid, Enter male, female or other" }]
+                                })];
+                        }
+                        return [4 /*yield*/, findUser.findUserById(id)];
+                    case 1:
+                        user = _a.sent();
+                        if (!user) {
+                            return [2 /*return*/, res.status(404).json({ errors: [{ msg: "Invalid User Id" }] })];
+                        }
+                        return [4 /*yield*/, editUser.editUser(id, body)];
+                    case 2:
+                        editedUser = _a.sent();
+                        return [2 /*return*/, res.status(200).json({ editedUser: editedUser })];
+                    case 3:
+                        err_4 = _a.sent();
+                        console.error(err_4.message);
+                        return [2 /*return*/, res
+                                .status(500)
+                                .json({ errors: [{ msg: "Internal Server Error" }] })];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    //   Delete User
+    UserController.prototype.deleteUser = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var message, id, user, isDeleted, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -174,8 +214,8 @@ var UserController = /** @class */ (function () {
                         }
                         return [2 /*return*/, res.status(200).json({ message: message })];
                     case 3:
-                        err_4 = _a.sent();
-                        console.error(err_4.message);
+                        err_5 = _a.sent();
+                        console.error(err_5.message);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];
@@ -203,11 +243,17 @@ var UserController = /** @class */ (function () {
         __metadata("design:returntype", Promise)
     ], UserController.prototype, "addUser", null);
     __decorate([
+        decorators_1.Put("/:id"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:returntype", Promise)
+    ], UserController.prototype, "ediUser", null);
+    __decorate([
         decorators_1.Delete("/:id"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", Promise)
-    ], UserController.prototype, "deleteUserasync", null);
+    ], UserController.prototype, "deleteUser", null);
     UserController = __decorate([
         decorators_1.Controller("/users")
     ], UserController);

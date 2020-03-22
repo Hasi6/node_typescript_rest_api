@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { Get, Post, Put, Delete, Controller } from "../../decorators";
-import { DeleteUser, SaveUser, FindUser } from "../../database";
+import { DeleteUser, SaveUser, FindUser, EditUser } from "../../database";
 
 const findUser = new FindUser();
 const removeUser = new DeleteUser();
 const saveUser = new SaveUser();
+const editUser = new EditUser();
 
 @Controller("/users")
 class UserController {
@@ -81,9 +82,44 @@ class UserController {
     }
   }
 
+  //   Edit User
+  @Put("/:id")
+  async ediUser(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id } = req.params;
+
+      const body = req.body;
+
+      const { gender } = body;
+
+      delete body.email;
+      delete body._id;
+
+      if (gender !== "male" && gender !== "female" && gender !== "other") {
+        return res.status(404).json({
+          errors: [{ msg: "Gender is Invalid, Enter male, female or other" }]
+        });
+      }
+
+      const user = await findUser.findUserById(id);
+
+      if (!user) {
+        return res.status(404).json({ errors: [{ msg: "Invalid User Id" }] });
+      }
+
+      const editedUser = await editUser.editUser(id, body);
+      return res.status(200).json({ editedUser });
+    } catch (err) {
+      console.error(err.message);
+      return res
+        .status(500)
+        .json({ errors: [{ msg: "Internal Server Error" }] });
+    }
+  }
+
   //   Delete User
   @Delete("/:id")
-  async deleteUserasync(req: Request, res: Response): Promise<Response> {
+  async deleteUser(req: Request, res: Response): Promise<Response> {
     try {
       let message = "User Deleted";
       const { id } = req.params;

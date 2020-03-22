@@ -1,31 +1,17 @@
 import "reflect-metadata";
+import { Methods } from "../methods/Methods";
 
-export function Get(path: string) {
-  return function(target: any, key: string, desc: PropertyDescriptor) {
-    Reflect.defineMetadata("path", path, target, key);
+function routeBinder(method: string) {
+  return function(path: string) {
+    return function(target: any, key: string, desc: PropertyDescriptor) {
+      Reflect.defineMetadata("path", path, target, key);
+      Reflect.defineMetadata("method", method, target, key);
+    };
   };
 }
 
-export function Post(path: string) {
-  return function(target: any, key: string, desc: PropertyDescriptor) {
-    Reflect.defineMetadata("path", path, target, key);
-  };
-}
-
-export function Put(path: string) {
-  return function(target: any, key: string, desc: PropertyDescriptor) {
-    Reflect.defineMetadata("path", path, target, key);
-  };
-}
-
-export function Delete(path: string) {
-  return function(target: any, key: string, desc: PropertyDescriptor) {
-    Reflect.defineMetadata("path", path, target, key);
-  };
-}
-
-export function Patch(path: string) {
-  return function(target: any, key: string, desc: PropertyDescriptor) {
-    Reflect.defineMetadata("path", path, target, key);
-  };
-}
+export const Get = routeBinder(Methods.Get);
+export const Post = routeBinder(Methods.Post);
+export const Put = routeBinder(Methods.Put);
+export const Patch = routeBinder(Methods.Patch);
+export const Delete = routeBinder(Methods.Delete);
