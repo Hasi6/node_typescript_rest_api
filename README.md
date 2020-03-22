@@ -29,3 +29,23 @@ GET <br />
 
 GET <br />
 /api/users/perPage=1&page=2
+
+# Find One User
+
+Get <br />
+/api/users/5e76ff23172f105af433b6a6 <br />
+
+# Delete User
+
+Delete <br />
+/api/users/5e76ff23172f105af433b6a6 <br />
+
+# Edit User
+
+Edit <br />
+/api/users/5e76ff23172f105af433b6a6 <br />
+{
+"firstName": "Chandula123",
+"age":24,
+"height": 1.7
+}

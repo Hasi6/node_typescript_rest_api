@@ -12,7 +12,14 @@ export const updateUser = async (req: Request, res: Response): Promise<Response>
 
         const body = req.body
 
+        const { gender } = body
+
         delete body.email
+        delete body._id
+
+        if (gender !== "male" && gender !== "female" && gender !== "other") {
+            return res.status(404).json({ errors: [{ msg: "Gender is Invalid, Enter male, female or other" }] })
+        }
 
 
         const user = await findUser.findUserById(id)

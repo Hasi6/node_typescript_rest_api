@@ -41,14 +41,19 @@ var EditUser_1 = require("../../database/user/EditUser");
 var findUser = new FindUser_1.FindUser();
 var editUser = new EditUser_1.EditUser();
 exports.updateUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, body, user, editedUser, err_1;
+    var id, body, gender, user, editedUser, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 id = req.params.id;
                 body = req.body;
+                gender = body.gender;
                 delete body.email;
+                delete body._id;
+                if (gender !== "male" && gender !== "female" && gender !== "other") {
+                    return [2 /*return*/, res.status(404).json({ errors: [{ msg: "Gender is Invalid, Enter male, female or other" }] })];
+                }
                 return [4 /*yield*/, findUser.findUserById(id)];
             case 1:
                 user = _a.sent();
