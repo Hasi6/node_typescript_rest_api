@@ -11,7 +11,7 @@ http://localhost:5000
 # Add User
 
 POST <br/>
-/api/users/addUser <br/>
+/api/users/ <br/>
 body = {
 "email": "hasitha12.chandula@gmail.com", <br/>
 "gender": "male", <br/>
@@ -28,4 +28,4 @@ GET <br />
 # Find All Users With Pagination
 
 GET <br />
-/api/users/allUsers/perPage=1&page=2
+/api/users/perPage=1&page=2

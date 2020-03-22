@@ -8,8 +8,8 @@ import { findAllUsersRoute } from './findAllUser';
 const router = Router()
 
 router.get('/firstName=:firstName&age=:age', searchUserRoute)
-router.get('/allUsers/perPage=:perPage&page=:page', findAllUsersRoute)
-router.post('/addUser', addUserValidateArray, bodyValidator, addUserRoute)
+router.get('/perPage=:perPage&page=:page', findAllUsersRoute)
+router.post('/', addUserValidateArray, bodyValidator, addUserRoute)
 
 
 export default router

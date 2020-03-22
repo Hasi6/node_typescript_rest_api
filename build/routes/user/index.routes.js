@@ -11,6 +11,6 @@ var searchUsers_1 = require("./searchUsers");
 var findAllUser_1 = require("./findAllUser");
 var router = express_1.Router();
 router.get('/firstName=:firstName&age=:age', searchUsers_1.searchUserRoute);
-router.get('/allUsers/perPage=:perPage&page=:page', findAllUser_1.findAllUsersRoute);
-router.post('/addUser', addUserValidatorArray_1.addUserValidateArray, bodyValidator_1.default, addUser_1.addUserRoute);
+router.get('/perPage=:perPage&page=:page', findAllUser_1.findAllUsersRoute);
+router.post('/', addUserValidatorArray_1.addUserValidateArray, bodyValidator_1.default, addUser_1.addUserRoute);
 exports.default = router;

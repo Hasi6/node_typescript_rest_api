@@ -9,8 +9,7 @@ var Gender = Object.freeze({
 var UsersSchema = new mongoose_1.Schema({
     firstName: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     age: {
         type: Number,
