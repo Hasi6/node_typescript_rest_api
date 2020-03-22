@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { Get, Post, Put, Delete, Controller } from "../../decorators";
+import { Request, Response, NextFunction } from "express";
+import { Get, Post, Put, Delete, Controller, use } from "../../decorators";
 import { DeleteUser, SaveUser, FindUser, EditUser } from "../../database";
 
 const findUser = new FindUser();
@@ -7,10 +7,16 @@ const removeUser = new DeleteUser();
 const saveUser = new SaveUser();
 const editUser = new EditUser();
 
+function logger(req: Request, res: Response, next: NextFunction) {
+  console.log("Hasi");
+  next();
+}
+
 @Controller("/users")
 class UserController {
   // Default Users With Pagination
   @Get("/")
+  @use(logger)
   async getUsers(req: Request, res: Response): Promise<Response> {
     try {
       const perPage = 20;

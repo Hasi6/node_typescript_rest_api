@@ -51,6 +51,10 @@ var findUser = new database_1.FindUser();
 var removeUser = new database_1.DeleteUser();
 var saveUser = new database_1.SaveUser();
 var editUser = new database_1.EditUser();
+function logger(req, res, next) {
+    console.log("Hasi");
+    next();
+}
 var UserController = /** @class */ (function () {
     function UserController() {
     }
@@ -226,6 +230,7 @@ var UserController = /** @class */ (function () {
     };
     __decorate([
         decorators_1.Get("/"),
+        decorators_1.use(logger),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", Promise)
