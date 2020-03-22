@@ -7,10 +7,14 @@ var Gender = Object.freeze({
     Other: 'other',
 });
 var UsersSchema = new mongoose_1.Schema({
-    username: {
+    firstName: {
         type: String,
         required: true,
         unique: true
+    },
+    age: {
+        type: Number,
+        required: true
     },
     nickNames: {
         type: [String],
@@ -27,11 +31,11 @@ var UsersSchema = new mongoose_1.Schema({
     },
     image: {
         type: String,
-        required: true
     },
     gender: {
         type: String,
-        enum: Object.values(Gender)
+        enum: Object.values(Gender),
+        required: true
     },
 }, { timestamps: true });
 exports.default = mongoose_1.model("users", UsersSchema);

@@ -36,48 +36,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var FindUser_1 = require("../../database/user/FindUser");
-var SaveUser_1 = require("../../database/user/SaveUser");
-var findUser = new FindUser_1.FindUser();
-var saveUser = new SaveUser_1.SaveUser();
-exports.addUserRoute = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, firstName, image, age, height, gender, user, newUser, response, err_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, email = _a.email, firstName = _a.firstName, image = _a.image, age = _a.age, height = _a.height, gender = _a.gender;
-                if (gender !== "male" && gender !== "female" && gender !== "other") {
-                    return [2 /*return*/, res.status(404).json({ errors: [{ msg: "Gender is Invalid, Enter male, female or other" }] })];
+var mongoose_1 = require("mongoose");
+var User = mongoose_1.model('users');
+var FindUser = /** @class */ (function () {
+    function FindUser() {
+        var _this = this;
+        // Find User By Email
+        this.findUserByEmail = function (email) { return __awaiter(_this, void 0, void 0, function () {
+            var user, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, User.findOne({ email: email })];
+                    case 1:
+                        user = _a.sent();
+                        return [2 /*return*/, user];
+                    case 2:
+                        err_1 = _a.sent();
+                        console.error(err_1.message);
+                        return [2 /*return*/, null];
+                    case 3: return [2 /*return*/];
                 }
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 4, , 5]);
-                return [4 /*yield*/, findUser.findUserByEmail(email)
-                    // If User Found On That Email Send Email Found Message
-                ];
-            case 2:
-                user = _b.sent();
-                // If User Found On That Email Send Email Found Message
-                if (user) {
-                    return [2 /*return*/, res.status(404).json({ errors: [{ msg: "Email Already Taken" }] })];
-                }
-                newUser = {
-                    email: email,
-                    age: age,
-                    firstName: firstName,
-                    image: image,
-                    height: parseFloat(height),
-                    gender: gender,
-                };
-                return [4 /*yield*/, saveUser.saveUserInDatabase(newUser)];
-            case 3:
-                response = _b.sent();
-                return [2 /*return*/, res.status(201).json({ newUser: response })];
-            case 4:
-                err_1 = _b.sent();
-                console.error(err_1.message);
-                return [2 /*return*/, res.status(500).json({ errors: [{ msg: "Internal Server Error" }] })];
-            case 5: return [2 /*return*/];
-        }
-    });
-}); };
+            });
+        }); };
+    }
+    return FindUser;
+}());
+exports.FindUser = FindUser;

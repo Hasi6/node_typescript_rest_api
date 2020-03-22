@@ -19,6 +19,9 @@ app.use(express.json());
 // Db Connection
 connectDB();
 
+
+app.use('/api/users', UserRoutes)
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

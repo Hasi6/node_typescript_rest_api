@@ -3,9 +3,10 @@ import { Schema, model, Document } from "mongoose";
 
 // User Interface
 export interface IUser extends Document {
-  username: String;
+  firstName: String;
   nickNames: string[];
   email: string;
+  age: number;
   image: string;
   height: number;
   gender: Gender;
@@ -33,10 +34,14 @@ export type UserType = IUser & Document
 
 const UsersSchema = new Schema(
   {
-    username: {
+    firstName: {
       type: String,
       required: true,
       unique: true
+    },
+    age: {
+      type: Number,
+      required: true
     },
     nickNames: {
       type: [String],
@@ -53,11 +58,11 @@ const UsersSchema = new Schema(
     },
     image: {
       type: String,
-      required: true
     },
     gender: {
       type: String,
-      enum: Object.values(Gender)
+      enum: Object.values(Gender),
+      required: true
     },
   },
   { timestamps: true }
