@@ -9,8 +9,14 @@ var addUserValidatorArray_1 = require("../../middlewares/userValidator/addUserVa
 var bodyValidator_1 = __importDefault(require("../../middlewares/bodyValidator"));
 var searchUsers_1 = require("./searchUsers");
 var findAllUser_1 = require("./findAllUser");
+var findUser_1 = require("./findUser");
+var editUser_1 = require("./editUser");
+var deleteUser_1 = require("./deleteUser");
 var router = express_1.Router();
 router.get('/firstName=:firstName&age=:age', searchUsers_1.searchUserRoute);
 router.get('/perPage=:perPage&page=:page', findAllUser_1.findAllUsersRoute);
+router.get('/:id', findUser_1.getUser);
 router.post('/', addUserValidatorArray_1.addUserValidateArray, bodyValidator_1.default, addUser_1.addUserRoute);
+router.put('/:id', editUser_1.updateUser);
+router.delete('/:id', deleteUser_1.deleteUser);
 exports.default = router;

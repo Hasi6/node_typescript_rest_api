@@ -4,6 +4,19 @@ import { UserType, IUser } from '../../models/Users';
 const User = model<UserType>('users')
 
 export class FindUser {
+
+    // find User by Id
+    findUserById = async (id: string): Promise<IUser | null> => {
+        try {
+            const album: IUser | null = await User.findById(id);
+            return album;
+        } catch (err) {
+            console.error(err.message);
+            return null;
+        }
+    };
+
+
     // Find User By Email
     findUserByEmail = async (email: string): Promise<IUser | null> => {
         try {
@@ -18,12 +31,18 @@ export class FindUser {
     // Find All Users with Pagination
     findAllUsers = async (perPage: number, page: number): Promise<any> => {
         try {
+            const numberOfUser: number = await User.find().countDocuments();
+            const pages: number = Math.ceil(numberOfUser / perPage);
+
+            if (pages < page) {
+                return { msg: `Only ${pages} pages found` }
+            }
+
             const users = await User.find().sort({ createdAt: -1 }).skip(Math.abs(perPage * page - perPage))
                 .limit(perPage)
             console.log(users)
-            const numberOfUser: number = await User.find().countDocuments();
-            const pages: number = Math.ceil(numberOfUser / perPage);
-            return { users, numberOfUser, pages }
+
+            return { users, numberOfUser, pages, currentPage: page }
         } catch (err) {
             console.error(err.message);
             return []

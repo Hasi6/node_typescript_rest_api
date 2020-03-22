@@ -41,9 +41,28 @@ var User = mongoose_1.model('users');
 var FindUser = /** @class */ (function () {
     function FindUser() {
         var _this = this;
+        // find User by Id
+        this.findUserById = function (id) { return __awaiter(_this, void 0, void 0, function () {
+            var album, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, User.findById(id)];
+                    case 1:
+                        album = _a.sent();
+                        return [2 /*return*/, album];
+                    case 2:
+                        err_1 = _a.sent();
+                        console.error(err_1.message);
+                        return [2 /*return*/, null];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
         // Find User By Email
         this.findUserByEmail = function (email) { return __awaiter(_this, void 0, void 0, function () {
-            var user, err_1;
+            var user, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -53,8 +72,8 @@ var FindUser = /** @class */ (function () {
                         user = _a.sent();
                         return [2 /*return*/, user];
                     case 2:
-                        err_1 = _a.sent();
-                        console.error(err_1.message);
+                        err_2 = _a.sent();
+                        console.error(err_2.message);
                         return [2 /*return*/, null];
                     case 3: return [2 /*return*/];
                 }
@@ -62,24 +81,27 @@ var FindUser = /** @class */ (function () {
         }); };
         // Find All Users with Pagination
         this.findAllUsers = function (perPage, page) { return __awaiter(_this, void 0, void 0, function () {
-            var users, numberOfUser, pages, err_2;
+            var numberOfUser, pages, users, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, User.find().sort({ createdAt: -1 }).skip(Math.abs(perPage * page - perPage))
-                                .limit(perPage)];
-                    case 1:
-                        users = _a.sent();
-                        console.log(users);
                         return [4 /*yield*/, User.find().countDocuments()];
-                    case 2:
+                    case 1:
                         numberOfUser = _a.sent();
                         pages = Math.ceil(numberOfUser / perPage);
-                        return [2 /*return*/, { users: users, numberOfUser: numberOfUser, pages: pages }];
+                        if (pages < page) {
+                            return [2 /*return*/, { msg: "Only " + pages + " pages found" }];
+                        }
+                        return [4 /*yield*/, User.find().sort({ createdAt: -1 }).skip(Math.abs(perPage * page - perPage))
+                                .limit(perPage)];
+                    case 2:
+                        users = _a.sent();
+                        console.log(users);
+                        return [2 /*return*/, { users: users, numberOfUser: numberOfUser, pages: pages, currentPage: page }];
                     case 3:
-                        err_2 = _a.sent();
-                        console.error(err_2.message);
+                        err_3 = _a.sent();
+                        console.error(err_3.message);
                         return [2 /*return*/, []];
                     case 4: return [2 /*return*/];
                 }
@@ -87,7 +109,7 @@ var FindUser = /** @class */ (function () {
         }); };
         // Search User By FirstName and Age
         this.findUserByUsernameAndAge = function (username, age) { return __awaiter(_this, void 0, void 0, function () {
-            var searchWord, users, err_3;
+            var searchWord, users, err_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -100,8 +122,8 @@ var FindUser = /** @class */ (function () {
                         users = _a.sent();
                         return [2 /*return*/, users];
                     case 3:
-                        err_3 = _a.sent();
-                        console.error(err_3.message);
+                        err_4 = _a.sent();
+                        console.error(err_4.message);
                         return [2 /*return*/, []];
                     case 4: return [2 /*return*/];
                 }
@@ -109,7 +131,7 @@ var FindUser = /** @class */ (function () {
         }); };
         // Search User By Many Field
         this.findUsersByAnyField = function (searchKey) { return __awaiter(_this, void 0, void 0, function () {
-            var searchWord, user, err_4;
+            var searchWord, user, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -129,8 +151,8 @@ var FindUser = /** @class */ (function () {
                         user = _a.sent();
                         return [2 /*return*/, user];
                     case 3:
-                        err_4 = _a.sent();
-                        console.error(err_4.message);
+                        err_5 = _a.sent();
+                        console.error(err_5.message);
                         return [2 /*return*/, null];
                     case 4: return [2 /*return*/];
                 }

@@ -12,7 +12,7 @@ http://localhost:5000
 
 POST <br/>
 /api/users/ <br/>
-body = {
+body = { <br />
 "email": "hasitha12.chandula@gmail.com", <br/>
 "gender": "male", <br/>
 "firstName":"Hasi",<br/>
