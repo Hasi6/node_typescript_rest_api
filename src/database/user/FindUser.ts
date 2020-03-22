@@ -14,4 +14,57 @@ export class FindUser {
             return null;
         }
     };
+
+    // Find All Users with Pagination
+    findAllUsers = async (perPage: number, page: number): Promise<any> => {
+        try {
+            const users = await User.find().sort({ createdAt: -1 }).skip(Math.abs(perPage * page - perPage))
+                .limit(perPage)
+            console.log(users)
+            const numberOfUser: number = await User.find().countDocuments();
+            const pages: number = Math.ceil(numberOfUser / perPage);
+            return { users, numberOfUser, pages }
+        } catch (err) {
+            console.error(err.message);
+            return []
+        }
+    }
+
+
+    // Search User By FirstName and Age
+    findUserByUsernameAndAge = async (username: string, age: number): Promise<IUser[]> => {
+
+        const searchWord: any = new RegExp(username, "gi");
+
+        try {
+            const users: IUser[] = await User.find({ $and: [{ firstName: searchWord }, { age }] })
+            return users
+        } catch (err) {
+            console.error(err.message);
+            return []
+        }
+    }
+
+    // Search User By Many Field
+    findUsersByAnyField = async (
+        searchKey: string
+    ): Promise<IUser[] | null> => {
+        const searchWord: any = new RegExp(searchKey, "gi");
+        try {
+            const user: IUser[] = await User.find({
+                $or: [
+                    { firstName: searchWord },
+                    { age: searchWord },
+                    { phone: searchWord },
+                    { skills: searchWord }
+                ]
+            });
+            return user;
+        } catch (err) {
+            console.error(err.message);
+            return null;
+        }
+    };
+
+
 }

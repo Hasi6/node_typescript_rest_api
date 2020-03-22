@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { FindUser } from '../../database/user/FindUser';
-import { IUser } from '../../models/Users';
 import { SaveUser } from '../../database/user/SaveUser';
 
 

@@ -38,14 +38,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var FindUser_1 = require("../../database/user/FindUser");
 var findUser = new FindUser_1.FindUser();
-exports.searchUserRoute = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, firstName, age, users, err_1;
+exports.findAllUsersRoute = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, perPage, page, users, err_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                _a = req.params, firstName = _a.firstName, age = _a.age;
-                return [4 /*yield*/, findUser.findUserByUsernameAndAge(firstName, parseInt(age))];
+                _a = req.params, perPage = _a.perPage, page = _a.page;
+                return [4 /*yield*/, findUser.findAllUsers(parseInt(perPage), parseInt(page))];
             case 1:
                 users = _b.sent();
                 return [2 /*return*/, res.status(200).json({ users: users })];

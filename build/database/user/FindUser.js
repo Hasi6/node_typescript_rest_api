@@ -60,6 +60,82 @@ var FindUser = /** @class */ (function () {
                 }
             });
         }); };
+        // Find All Users with Pagination
+        this.findAllUsers = function (perPage, page) { return __awaiter(_this, void 0, void 0, function () {
+            var users, numberOfUser, pages, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, User.find().sort({ createdAt: -1 }).skip(Math.abs(perPage * page - perPage))
+                                .limit(perPage)];
+                    case 1:
+                        users = _a.sent();
+                        console.log(users);
+                        return [4 /*yield*/, User.find().countDocuments()];
+                    case 2:
+                        numberOfUser = _a.sent();
+                        pages = Math.ceil(numberOfUser / perPage);
+                        return [2 /*return*/, { users: users, numberOfUser: numberOfUser, pages: pages }];
+                    case 3:
+                        err_2 = _a.sent();
+                        console.error(err_2.message);
+                        return [2 /*return*/, []];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
+        // Search User By FirstName and Age
+        this.findUserByUsernameAndAge = function (username, age) { return __awaiter(_this, void 0, void 0, function () {
+            var searchWord, users, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        searchWord = new RegExp(username, "gi");
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, User.find({ $and: [{ firstName: searchWord }, { age: age }] })];
+                    case 2:
+                        users = _a.sent();
+                        return [2 /*return*/, users];
+                    case 3:
+                        err_3 = _a.sent();
+                        console.error(err_3.message);
+                        return [2 /*return*/, []];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
+        // Search User By Many Field
+        this.findUsersByAnyField = function (searchKey) { return __awaiter(_this, void 0, void 0, function () {
+            var searchWord, user, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        searchWord = new RegExp(searchKey, "gi");
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, User.find({
+                                $or: [
+                                    { firstName: searchWord },
+                                    { age: searchWord },
+                                    { phone: searchWord },
+                                    { skills: searchWord }
+                                ]
+                            })];
+                    case 2:
+                        user = _a.sent();
+                        return [2 /*return*/, user];
+                    case 3:
+                        err_4 = _a.sent();
+                        console.error(err_4.message);
+                        return [2 /*return*/, null];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
     }
     return FindUser;
 }());
