@@ -49,3 +49,28 @@ Edit <br />
 "age":24,
 "height": 1.7
 }
+
+# Profile
+
+GET <br />
+/api/profiles/perPage=1&page=2 <br />
+/api/profiles
+
+# Find One Profile
+
+Get <br />
+/api/profiles/5e78d98d3667271f077d2260 <br />
+
+# Delete Profile
+
+Delete <br />
+/api/prpfiles/5e78d98d3667271f077d2260 <br />
+
+# Edit Profile
+
+Edit <br />
+/api/profile/5e78d98d3667271f077d2260 <br />
+{
+"firstName": "Hasitha Chandula",
+"lastName": "Hasi"
+}

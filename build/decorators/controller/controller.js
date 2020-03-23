@@ -12,16 +12,19 @@ var AppRouter_1 = require("../../AppRouter");
 var MetaDataKeys_1 = require("../MetaDataKeys/MetaDataKeys");
 function bodyValidators(keys) {
     return function (req, res, next) {
-        if (!req.body) {
-            res.status(422).json({ errors: [{ msg: "Body Not Found" }] });
+        var errors = [];
+        if (Object.keys(req.body).length === 0 && req.body.constructor === Object) {
+            res.status(422).json({ errors: [{ msg: "Request Body Not Found" }] });
             return;
         }
         for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
             var key = keys_1[_i];
-            if (req.body[key]) {
-                res.status(422).json({ errors: [{ msg: "Body Not Found" }] });
-                return;
+            if (!req.body[key]) {
+                errors = __spreadArrays(errors, [{ msg: key + " is Required", value: key }]);
             }
+        }
+        if (errors.length > 0) {
+            return res.status(400).json({ errors: errors });
         }
         next();
     };

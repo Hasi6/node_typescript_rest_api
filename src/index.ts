@@ -6,9 +6,11 @@ import { AppRouter } from "./AppRouter";
 
 // Models
 import "./models/Users";
+import "./models/Profile";
 
 // Controllers
 import "./controllers/user/UserController";
+import "./controllers/profile/ProfileController";
 
 const app = express();
 app.use(cors());

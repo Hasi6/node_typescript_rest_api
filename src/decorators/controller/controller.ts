@@ -7,18 +7,22 @@ import { RequestHandler, Request, Response, NextFunction } from "express";
 
 function bodyValidators(keys: string): RequestHandler {
   return function(req: Request, res: Response, next: NextFunction) {
-    if (!req.body) {
-      res.status(422).json({ errors: [{ msg: "Body Not Found" }] });
+    let errors: any[] = [];
+
+    if (Object.keys(req.body).length === 0 && req.body.constructor === Object) {
+      res.status(422).json({ errors: [{ msg: "Request Body Not Found" }] });
       return;
     }
 
     for (let key of keys) {
-      if (req.body[key]) {
-        res.status(422).json({ errors: [{ msg: "Body Not Found" }] });
-        return;
+      if (!req.body[key]) {
+        errors = [...errors, { msg: `${key} is Required`, value: key }];
       }
     }
 
+    if (errors.length > 0) {
+      return res.status(400).json({ errors: errors });
+    }
     next();
   };
 }
