@@ -16,17 +16,11 @@ const removeUser = new DeleteUser();
 const saveUser = new SaveUser();
 const editUser = new EditUser();
 
-function logger(req: Request, res: Response, next: NextFunction) {
-  console.log("Hasi123");
-  next();
-}
-
 @Controller("/users")
 class UserController {
   // Default Users With Pagination
 
   @Get("/")
-  @use(logger)
   async getUsers(req: Request, res: Response): Promise<Response> {
     try {
       const perPage = 20;

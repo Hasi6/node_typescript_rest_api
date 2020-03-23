@@ -13,7 +13,7 @@ var MetaDataKeys_1 = require("../MetaDataKeys/MetaDataKeys");
 function bodyValidators(keys) {
     return function (req, res, next) {
         var errors = [];
-        if (Object.keys(req.body).length === 0 && req.body.constructor === Object) {
+        if (!req.body) {
             res.status(422).json({ errors: [{ msg: "Request Body Not Found" }] });
             return;
         }
