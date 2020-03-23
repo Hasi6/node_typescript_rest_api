@@ -9,8 +9,10 @@ var cors_1 = __importDefault(require("cors"));
 var AppRouter_1 = require("./AppRouter");
 // Models
 require("./models/Users");
+require("./models/Profile");
 // Controllers
 require("./controllers/user/UserController");
+require("./controllers/profile/ProfileController");
 var app = express_1.default();
 app.use(cors_1.default());
 app.use(express_1.default.json());

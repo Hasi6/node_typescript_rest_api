@@ -1,6 +1,5 @@
 import { Schema, model, Document } from "mongoose";
 
-
 // User Interface
 export interface IUser extends Document {
   firstName: String;
@@ -17,26 +16,27 @@ export interface IUser extends Document {
 interface Gender {
   Male: string;
   Female: string;
-  Other: string
+  Other: string;
 }
 
-
 const Gender = Object.freeze({
-  Male: 'male',
-  Female: 'female',
-  Other: 'other',
+  Male: "male",
+  Female: "female",
+  Other: "other"
 });
 
-
 // UserType
-export type UserType = IUser & Document
-
+export type UserType = IUser & Document;
 
 const UsersSchema = new Schema(
   {
     firstName: {
       type: String,
       required: true
+    },
+    profile: {
+      type: Schema.Types.ObjectId,
+      ref: "profile"
     },
     age: {
       type: Number,
@@ -56,13 +56,13 @@ const UsersSchema = new Schema(
       unique: true
     },
     image: {
-      type: String,
+      type: String
     },
     gender: {
       type: String,
       enum: Object.values(Gender),
       required: true
-    },
+    }
   },
   { timestamps: true }
 );
