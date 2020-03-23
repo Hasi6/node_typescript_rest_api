@@ -9,7 +9,7 @@ function bodyValidators(keys: string): RequestHandler {
   return function(req: Request, res: Response, next: NextFunction) {
     let errors: any[] = [];
 
-    if (Object.keys(req.body).length === 0 && req.body.constructor === Object) {
+    if (!req.body) {
       res.status(422).json({ errors: [{ msg: "Request Body Not Found" }] });
       return;
     }
