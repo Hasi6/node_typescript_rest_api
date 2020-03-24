@@ -2,8 +2,8 @@ import { Schema, model, Document } from "mongoose";
 
 // User Interface
 export interface IProfile extends Document {
-  firstName: String;
-  lastName: string[];
+  firstName: string;
+  lastName: string;
   job: number;
   profileImage: string;
   skills: string[];

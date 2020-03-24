@@ -15,6 +15,10 @@ var UsersSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "profile"
     },
+    projects: {
+        type: [mongoose_1.Schema.Types.ObjectId],
+        ref: "project"
+    },
     age: {
         type: Number,
         required: true
