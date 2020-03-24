@@ -14,10 +14,12 @@ import axios from "axios";
 import { FindProjects } from "../../database/project/GetProjects";
 import { checkProject } from "../../middlewares/checkProject/checkProject";
 import { DeleteProject } from "../../database/project/DeleteProject";
+import { EditProject } from "../../database/project/EditProject";
 
 const createProject = new CreateProject();
 const findProjects = new FindProjects();
 const deleteProjects = new DeleteProject();
+const editProject = new EditProject();
 const multer: Multer = new Multer();
 
 @Controller("/projects")
@@ -27,6 +29,20 @@ class ProjectController {
   async getProjects(req: Request, res: Response): Promise<void | Response> {
     try {
       res.redirect("projects/perPage=20&page=1");
+    } catch (err) {
+      console.error(err.message);
+      return res
+        .status(500)
+        .json({ errors: [{ msg: "Internal Server Error" }] });
+    }
+  }
+
+  @Get("/:id")
+  @use(checkProject)
+  async getProject(req: Request, res: Response): Promise<Response> {
+    try {
+      const project = await findProjects.findProjectById(req.params.id);
+      return res.status(200).json({ data: project });
     } catch (err) {
       console.error(err.message);
       return res
@@ -66,10 +82,20 @@ class ProjectController {
 
   //   Edit Project
   @Put("/:id")
-  async editProjetc(): Promise<Response> {
+  @use(checkProject)
+  async editProjetc(req: Request, res: Response): Promise<Response> {
     try {
+      const body = req.body;
+      delete body._id;
+
+      const editedProject = await editProject.editProject(req.params.id, body);
+
+      return res.status(200).json({ data: editedProject });
     } catch (err) {
       console.error(err.message);
+      return res
+        .status(500)
+        .json({ errors: [{ msg: "Internal Server Error" }] });
     }
   }
   //   Delete Project

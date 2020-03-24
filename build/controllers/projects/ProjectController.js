@@ -54,9 +54,11 @@ var AddProject_1 = require("../../database/project/AddProject");
 var GetProjects_1 = require("../../database/project/GetProjects");
 var checkProject_1 = require("../../middlewares/checkProject/checkProject");
 var DeleteProject_1 = require("../../database/project/DeleteProject");
+var EditProject_1 = require("../../database/project/EditProject");
 var createProject = new AddProject_1.CreateProject();
 var findProjects = new GetProjects_1.FindProjects();
 var deleteProjects = new DeleteProject_1.DeleteProject();
+var editProject = new EditProject_1.EditProject();
 var multer = new multer_1.default();
 var ProjectController = /** @class */ (function () {
     function ProjectController() {
@@ -78,9 +80,31 @@ var ProjectController = /** @class */ (function () {
             });
         });
     };
+    ProjectController.prototype.getProject = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var project, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, findProjects.findProjectById(req.params.id)];
+                    case 1:
+                        project = _a.sent();
+                        return [2 /*return*/, res.status(200).json({ data: project })];
+                    case 2:
+                        err_1 = _a.sent();
+                        console.error(err_1.message);
+                        return [2 /*return*/, res
+                                .status(500)
+                                .json({ errors: [{ msg: "Internal Server Error" }] })];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     ProjectController.prototype.getProjectsPagination = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, page, perPage, projects, err_1;
+            var _a, page, perPage, projects, err_2;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -91,8 +115,8 @@ var ProjectController = /** @class */ (function () {
                         projects = _b.sent();
                         return [2 /*return*/, res.status(200).json({ data: projects })];
                     case 2:
-                        err_1 = _b.sent();
-                        console.error(err_1.message);
+                        err_2 = _b.sent();
+                        console.error(err_2.message);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];
@@ -104,7 +128,7 @@ var ProjectController = /** @class */ (function () {
     // Add Projects
     ProjectController.prototype.addProject = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var err_2;
+            var err_3;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -124,8 +148,8 @@ var ProjectController = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        err_2 = _a.sent();
-                        console.error(err_2.message);
+                        err_3 = _a.sent();
+                        console.error(err_3.message);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -133,22 +157,34 @@ var ProjectController = /** @class */ (function () {
         });
     };
     //   Edit Project
-    ProjectController.prototype.editProjetc = function () {
+    ProjectController.prototype.editProjetc = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
+            var body, editedProject, err_4;
             return __generator(this, function (_a) {
-                try {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        body = req.body;
+                        delete body._id;
+                        return [4 /*yield*/, editProject.editProject(req.params.id, body)];
+                    case 1:
+                        editedProject = _a.sent();
+                        return [2 /*return*/, res.status(200).json({ data: editedProject })];
+                    case 2:
+                        err_4 = _a.sent();
+                        console.error(err_4.message);
+                        return [2 /*return*/, res
+                                .status(500)
+                                .json({ errors: [{ msg: "Internal Server Error" }] })];
+                    case 3: return [2 /*return*/];
                 }
-                catch (err) {
-                    console.error(err.message);
-                }
-                return [2 /*return*/];
             });
         });
     };
     //   Delete Project
     ProjectController.prototype.deleteProfile = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, response_1, err_3;
+            var id, response_1, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -164,8 +200,8 @@ var ProjectController = /** @class */ (function () {
                         }
                         return [2 /*return*/, res.status(200).json({ data: [{ msg: "Profile Deleted" }] })];
                     case 2:
-                        err_3 = _a.sent();
-                        console.error(err_3.message);
+                        err_5 = _a.sent();
+                        console.error(err_5.message);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];
@@ -181,6 +217,13 @@ var ProjectController = /** @class */ (function () {
         __metadata("design:returntype", Promise)
     ], ProjectController.prototype, "getProjects", null);
     __decorate([
+        decorators_1.Get("/:id"),
+        decorators_1.use(checkProject_1.checkProject),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:returntype", Promise)
+    ], ProjectController.prototype, "getProject", null);
+    __decorate([
         decorators_1.Get("/perPage=:perPage&page=:page"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
@@ -194,8 +237,9 @@ var ProjectController = /** @class */ (function () {
     ], ProjectController.prototype, "addProject", null);
     __decorate([
         decorators_1.Put("/:id"),
+        decorators_1.use(checkProject_1.checkProject),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
+        __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", Promise)
     ], ProjectController.prototype, "editProjetc", null);
     __decorate([
