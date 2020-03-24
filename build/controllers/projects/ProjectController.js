@@ -68,7 +68,7 @@ var ProjectController = /** @class */ (function () {
                         return [4 /*yield*/, multer.upload(req, res, function (err) { return __awaiter(_this, void 0, void 0, function () {
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
-                                        case 0: return [4 /*yield*/, createProject.addProject(req)];
+                                        case 0: return [4 /*yield*/, createProject.saveProjectInDatabase(req, res)];
                                         case 1:
                                             _a.sent();
                                             return [2 /*return*/];
@@ -77,7 +77,6 @@ var ProjectController = /** @class */ (function () {
                             }); })];
                     case 1:
                         _a.sent();
-                        res.json();
                         return [3 /*break*/, 3];
                     case 2:
                         err_1 = _a.sent();

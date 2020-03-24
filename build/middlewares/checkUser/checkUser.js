@@ -35,58 +35,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose_1 = require("mongoose");
-var fs_1 = __importDefault(require("fs"));
-var Project = mongoose_1.model("project");
-var CreateProject = /** @class */ (function () {
-    function CreateProject() {
-    }
-    // Save Project In Database
-    CreateProject.prototype.saveProjectInDatabase = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var image, _a, user, title, description, isCompleted, project, newProject, err_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        _b.trys.push([0, 2, , 3]);
-                        image = null;
-                        if (req.file) {
-                            image = fs_1.default.readFileSync("./uploads/" + req.file.originalname);
-                        }
-                        _a = req.body, user = _a.user, title = _a.title, description = _a.description, isCompleted = _a.isCompleted;
-                        if (!user || !title || !description || isCompleted === undefined) {
-                            res.status(400).json({
-                                errors: {
-                                    msg: "user, title, description, isCompleted: (true or false) required"
-                                }
-                            });
-                            return [2 /*return*/];
-                        }
-                        project = {
-                            user: user,
-                            title: title,
-                            description: description,
-                            isCompleted: isCompleted,
-                            image: image
-                        };
-                        newProject = new Project(project);
-                        return [4 /*yield*/, newProject.save()];
-                    case 1:
-                        _b.sent();
-                        return [2 /*return*/, res.status(201).json({ data: newProject })];
-                    case 2:
-                        err_1 = _b.sent();
-                        console.error(err_1.message);
-                        return [2 /*return*/, null];
-                    case 3: return [2 /*return*/];
-                }
-            });
+var database_1 = require("../../database");
+var findUser = new database_1.FindUser();
+function checkUser(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var user, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    console.log(req.body);
+                    return [4 /*yield*/, findUser.findUserById(req.body.user)];
+                case 1:
+                    user = _a.sent();
+                    if (!user) {
+                        res.status(400).json({
+                            errors: [{ msg: "Invalid User" }]
+                        });
+                        return [2 /*return*/];
+                    }
+                    next();
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_1 = _a.sent();
+                    console.error(err_1.message);
+                    res.status(500).json({ errors: [{ msg: "Internal Server Error" }] });
+                    return [2 /*return*/];
+                case 3: return [2 /*return*/];
+            }
         });
-    };
-    return CreateProject;
-}());
-exports.CreateProject = CreateProject;
+    });
+}
+exports.checkUser = checkUser;
