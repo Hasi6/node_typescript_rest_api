@@ -37,18 +37,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
-var Profile = mongoose_1.model("profile");
-var FindProfile = /** @class */ (function () {
-    function FindProfile() {
+var Project = mongoose_1.model("project");
+var FindProjects = /** @class */ (function () {
+    function FindProjects() {
         var _this = this;
-        // find Profile by Id
-        this.findProfileById = function (id) { return __awaiter(_this, void 0, void 0, function () {
-            var profile, err_1;
+        // Find Project by Id
+        this.findProjectById = function (id) { return __awaiter(_this, void 0, void 0, function () {
+            var project, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Profile.findById(id).populate("user", [
+                        return [4 /*yield*/, Project.findById(id).populate("user", [
                                 "username",
                                 "nickName",
                                 "height",
@@ -57,8 +57,8 @@ var FindProfile = /** @class */ (function () {
                                 "image"
                             ])];
                     case 1:
-                        profile = _a.sent();
-                        return [2 /*return*/, profile];
+                        project = _a.sent();
+                        return [2 /*return*/, project];
                     case 2:
                         err_1 = _a.sent();
                         console.error(err_1.message);
@@ -68,13 +68,13 @@ var FindProfile = /** @class */ (function () {
             });
         }); };
         //   Find Profile By UserId
-        this.findProfileByUserId = function (user) { return __awaiter(_this, void 0, void 0, function () {
-            var profile, err_2;
+        this.findProjectByUserId = function (user) { return __awaiter(_this, void 0, void 0, function () {
+            var project, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Profile.findOne({
+                        return [4 /*yield*/, Project.find({
                                 user: user
                             }).populate("user", [
                                 "username",
@@ -85,35 +85,35 @@ var FindProfile = /** @class */ (function () {
                                 "image"
                             ])];
                     case 1:
-                        profile = _a.sent();
-                        return [2 /*return*/, profile];
+                        project = _a.sent();
+                        return [2 /*return*/, project];
                     case 2:
                         err_2 = _a.sent();
                         console.error(err_2.message);
-                        return [2 /*return*/, null];
+                        return [2 /*return*/, []];
                     case 3: return [2 /*return*/];
                 }
             });
         }); };
         //   Get Profiles with Pagination
-        this.findAllProfiles = function (perPage, page) { return __awaiter(_this, void 0, void 0, function () {
-            var numberOfProfiles, pages, msg, profiles, err_3;
+        this.findAllProjects = function (perPage, page) { return __awaiter(_this, void 0, void 0, function () {
+            var numberOfProjects, pages, msg, projects, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, Profile.find().countDocuments()];
+                        return [4 /*yield*/, Project.find().countDocuments()];
                     case 1:
-                        numberOfProfiles = _a.sent();
-                        pages = Math.ceil(numberOfProfiles / perPage);
+                        numberOfProjects = _a.sent();
+                        pages = Math.ceil(numberOfProjects / perPage);
                         msg = "Only " + pages + " pages found";
                         if (pages < page) {
                             if (page === 1) {
-                                msg = "No Profiles found";
+                                msg = "No Projects found";
                             }
                             return [2 /*return*/, { msg: msg }];
                         }
-                        return [4 /*yield*/, Profile.find()
+                        return [4 /*yield*/, Project.find()
                                 .sort({ createdAt: -1 })
                                 .populate("user", [
                                 "username",
@@ -126,8 +126,8 @@ var FindProfile = /** @class */ (function () {
                                 .skip(Math.abs(perPage * page - perPage))
                                 .limit(perPage)];
                     case 2:
-                        profiles = _a.sent();
-                        return [2 /*return*/, { profiles: profiles, numberOfProfiles: numberOfProfiles, pages: pages, currentPage: page }];
+                        projects = _a.sent();
+                        return [2 /*return*/, { projects: projects, numberOfProjects: numberOfProjects, pages: pages, currentPage: page }];
                     case 3:
                         err_3 = _a.sent();
                         console.error(err_3.message);
@@ -137,6 +137,6 @@ var FindProfile = /** @class */ (function () {
             });
         }); };
     }
-    return FindProfile;
+    return FindProjects;
 }());
-exports.FindProfile = FindProfile;
+exports.FindProjects = FindProjects;

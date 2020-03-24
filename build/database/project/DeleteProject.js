@@ -37,54 +37,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
-var FindUser_1 = require("./FindUser");
-var User = mongoose_1.model("users");
-var findUser = new FindUser_1.FindUser();
-var EditUser = /** @class */ (function () {
-    function EditUser() {
+var Project = mongoose_1.model("project");
+var DeleteProject = /** @class */ (function () {
+    function DeleteProject() {
         var _this = this;
-        // Edit User
-        this.editUser = function (_id, body) { return __awaiter(_this, void 0, void 0, function () {
-            var user, err_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, User.updateOne({ _id: _id }, { $set: body })];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, findUser.findUserById(_id)];
-                    case 2:
-                        user = _a.sent();
-                        return [2 /*return*/, user];
-                    case 3:
-                        err_1 = _a.sent();
-                        console.error(err_1.message);
-                        return [2 /*return*/, null];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        }); };
-        // Add Project to User
-        this.addProject = function (_id, project) { return __awaiter(_this, void 0, void 0, function () {
-            var err_2;
+        // Delete Project By id
+        this.deleteProject = function (id) { return __awaiter(_this, void 0, void 0, function () {
+            var err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, User.updateOne({ _id: _id }, { $addToSet: { projects: project } })];
+                        return [4 /*yield*/, Project.findByIdAndDelete(id)];
                     case 1:
                         _a.sent();
-                        return [3 /*break*/, 3];
+                        return [2 /*return*/, true];
                     case 2:
-                        err_2 = _a.sent();
-                        console.error(err_2.message);
-                        return [3 /*break*/, 3];
+                        err_1 = _a.sent();
+                        console.error(err_1.message);
+                        return [2 /*return*/, false];
                     case 3: return [2 /*return*/];
                 }
             });
         }); };
     }
-    return EditUser;
+    return DeleteProject;
 }());
-exports.EditUser = EditUser;
+exports.DeleteProject = DeleteProject;

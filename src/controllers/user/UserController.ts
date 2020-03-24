@@ -21,12 +21,9 @@ class UserController {
   // Default Users With Pagination
 
   @Get("/")
-  async getUsers(req: Request, res: Response): Promise<Response> {
+  async getUsers(req: Request, res: Response): Promise<Response | void> {
     try {
-      const perPage = 20;
-      const page = 1;
-      const users = await findUser.findAllUsers(perPage, page);
-      return res.status(200).json(users);
+      res.redirect("users/perPage=20&page=1");
     } catch (err) {
       console.error(err.message);
       return res

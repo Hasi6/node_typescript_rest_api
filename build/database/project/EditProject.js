@@ -37,26 +37,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
-var FindUser_1 = require("./FindUser");
-var User = mongoose_1.model("users");
-var findUser = new FindUser_1.FindUser();
-var EditUser = /** @class */ (function () {
-    function EditUser() {
+var GetProjects_1 = require("./GetProjects");
+var findProject = new GetProjects_1.FindProjects();
+var Project = mongoose_1.model("project");
+var EditProject = /** @class */ (function () {
+    function EditProject() {
         var _this = this;
         // Edit User
-        this.editUser = function (_id, body) { return __awaiter(_this, void 0, void 0, function () {
-            var user, err_1;
+        this.editProject = function (_id, body) { return __awaiter(_this, void 0, void 0, function () {
+            var project, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, User.updateOne({ _id: _id }, { $set: body })];
+                        return [4 /*yield*/, Project.updateOne({ _id: _id }, { $set: body })];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, findUser.findUserById(_id)];
+                        return [4 /*yield*/, findProject.findProjectById(_id)];
                     case 2:
-                        user = _a.sent();
-                        return [2 /*return*/, user];
+                        project = _a.sent();
+                        return [2 /*return*/, project];
                     case 3:
                         err_1 = _a.sent();
                         console.error(err_1.message);
@@ -65,26 +65,7 @@ var EditUser = /** @class */ (function () {
                 }
             });
         }); };
-        // Add Project to User
-        this.addProject = function (_id, project) { return __awaiter(_this, void 0, void 0, function () {
-            var err_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, User.updateOne({ _id: _id }, { $addToSet: { projects: project } })];
-                    case 1:
-                        _a.sent();
-                        return [3 /*break*/, 3];
-                    case 2:
-                        err_2 = _a.sent();
-                        console.error(err_2.message);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        }); };
     }
-    return EditUser;
+    return EditProject;
 }());
-exports.EditUser = EditUser;
+exports.EditProject = EditProject;

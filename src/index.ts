@@ -7,10 +7,12 @@ import { AppRouter } from "./AppRouter";
 // Models
 import "./models/Users";
 import "./models/Profile";
+import "./models/Project";
 
 // Controllers
 import "./controllers/user/UserController";
 import "./controllers/profile/ProfileController";
+import "./controllers//projects/ProjectController";
 
 const app = express();
 app.use(cors());

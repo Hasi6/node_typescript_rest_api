@@ -36,55 +36,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose_1 = require("mongoose");
-var FindUser_1 = require("./FindUser");
-var User = mongoose_1.model("users");
-var findUser = new FindUser_1.FindUser();
-var EditUser = /** @class */ (function () {
-    function EditUser() {
-        var _this = this;
-        // Edit User
-        this.editUser = function (_id, body) { return __awaiter(_this, void 0, void 0, function () {
-            var user, err_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, User.updateOne({ _id: _id }, { $set: body })];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, findUser.findUserById(_id)];
-                    case 2:
-                        user = _a.sent();
-                        return [2 /*return*/, user];
-                    case 3:
-                        err_1 = _a.sent();
-                        console.error(err_1.message);
-                        return [2 /*return*/, null];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        }); };
-        // Add Project to User
-        this.addProject = function (_id, project) { return __awaiter(_this, void 0, void 0, function () {
-            var err_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, User.updateOne({ _id: _id }, { $addToSet: { projects: project } })];
-                    case 1:
-                        _a.sent();
-                        return [3 /*break*/, 3];
-                    case 2:
-                        err_2 = _a.sent();
-                        console.error(err_2.message);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        }); };
-    }
-    return EditUser;
-}());
-exports.EditUser = EditUser;
+var database_1 = require("../../database");
+var findUser = new database_1.FindUser();
+function checkUser(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var user, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    console.log(req.body);
+                    return [4 /*yield*/, findUser.findUserById(req.body.user)];
+                case 1:
+                    user = _a.sent();
+                    if (!user) {
+                        res.status(400).json({
+                            errors: [{ msg: "Invalid User" }]
+                        });
+                        return [2 /*return*/];
+                    }
+                    next();
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_1 = _a.sent();
+                    console.error(err_1.message);
+                    res.status(500).json({ errors: [{ msg: "Internal Server Error" }] });
+                    return [2 /*return*/];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.checkUser = checkUser;

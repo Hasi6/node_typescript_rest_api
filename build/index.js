@@ -10,9 +10,11 @@ var AppRouter_1 = require("./AppRouter");
 // Models
 require("./models/Users");
 require("./models/Profile");
+require("./models/Project");
 // Controllers
 require("./controllers/user/UserController");
 require("./controllers/profile/ProfileController");
+require("./controllers//projects/ProjectController");
 var app = express_1.default();
 app.use(cors_1.default());
 app.use(express_1.default.json());

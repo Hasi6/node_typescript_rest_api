@@ -35,56 +35,63 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
-var FindUser_1 = require("./FindUser");
-var User = mongoose_1.model("users");
-var findUser = new FindUser_1.FindUser();
-var EditUser = /** @class */ (function () {
-    function EditUser() {
-        var _this = this;
-        // Edit User
-        this.editUser = function (_id, body) { return __awaiter(_this, void 0, void 0, function () {
-            var user, err_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+var fs_1 = __importDefault(require("fs"));
+var EditUser_1 = require("../user/EditUser");
+var editUser = new EditUser_1.EditUser();
+var Project = mongoose_1.model("project");
+var CreateProject = /** @class */ (function () {
+    function CreateProject() {
+    }
+    // Save Project In Database
+    CreateProject.prototype.saveProjectInDatabase = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var image, _a, user, title, description, isCompleted, project, newProject, err_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, User.updateOne({ _id: _id }, { $set: body })];
+                        _b.trys.push([0, 3, , 4]);
+                        image = null;
+                        if (req.file) {
+                            image = fs_1.default.readFileSync("./uploads/" + req.file.originalname);
+                        }
+                        _a = req.body, user = _a.user, title = _a.title, description = _a.description, isCompleted = _a.isCompleted;
+                        if (!user || !title || !description || isCompleted === undefined) {
+                            res.status(400).json({
+                                errors: {
+                                    msg: "user, title, description, isCompleted: (true or false) required"
+                                }
+                            });
+                            return [2 /*return*/];
+                        }
+                        project = {
+                            user: user,
+                            title: title,
+                            description: description,
+                            isCompleted: isCompleted,
+                            image: image
+                        };
+                        newProject = new Project(project);
+                        return [4 /*yield*/, newProject.save()];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, findUser.findUserById(_id)];
+                        _b.sent();
+                        return [4 /*yield*/, editUser.addProject(user, newProject._id)];
                     case 2:
-                        user = _a.sent();
-                        return [2 /*return*/, user];
+                        _b.sent();
+                        return [2 /*return*/, res.status(201).json({ data: newProject })];
                     case 3:
-                        err_1 = _a.sent();
+                        err_1 = _b.sent();
                         console.error(err_1.message);
                         return [2 /*return*/, null];
                     case 4: return [2 /*return*/];
                 }
             });
-        }); };
-        // Add Project to User
-        this.addProject = function (_id, project) { return __awaiter(_this, void 0, void 0, function () {
-            var err_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, User.updateOne({ _id: _id }, { $addToSet: { projects: project } })];
-                    case 1:
-                        _a.sent();
-                        return [3 /*break*/, 3];
-                    case 2:
-                        err_2 = _a.sent();
-                        console.error(err_2.message);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        }); };
-    }
-    return EditUser;
+        });
+    };
+    return CreateProject;
 }());
-exports.EditUser = EditUser;
+exports.CreateProject = CreateProject;

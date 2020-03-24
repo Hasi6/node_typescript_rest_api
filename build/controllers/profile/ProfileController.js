@@ -61,32 +61,24 @@ var ProfileController = /** @class */ (function () {
     // Get Profile
     ProfileController.prototype.getProfiles = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var perPage, page, allProfile, err_1;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        perPage = 20;
-                        page = 1;
-                        return [4 /*yield*/, findProfile.findAllProfiles(perPage, page)];
-                    case 1:
-                        allProfile = _a.sent();
-                        return [2 /*return*/, res.status(200).json(allProfile)];
-                    case 2:
-                        err_1 = _a.sent();
-                        console.error(err_1.message);
-                        return [2 /*return*/, res
-                                .status(500)
-                                .json({ errors: [{ msg: "Internal Server Error" }] })];
-                    case 3: return [2 /*return*/];
+                try {
+                    res.redirect("profiles/perPage=20&page=1");
                 }
+                catch (err) {
+                    console.error(err.message);
+                    return [2 /*return*/, res
+                            .status(500)
+                            .json({ errors: [{ msg: "Internal Server Error" }] })];
+                }
+                return [2 /*return*/];
             });
         });
     };
     //   Get Profiles With Page Details
     ProfileController.prototype.getProfilesWithPages = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, perPage, page, allProfile, err_2;
+            var _a, perPage, page, allProfile, err_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -97,8 +89,8 @@ var ProfileController = /** @class */ (function () {
                         allProfile = _b.sent();
                         return [2 /*return*/, res.status(200).json(allProfile)];
                     case 2:
-                        err_2 = _b.sent();
-                        console.error(err_2.message);
+                        err_1 = _b.sent();
+                        console.error(err_1.message);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];
@@ -110,7 +102,7 @@ var ProfileController = /** @class */ (function () {
     //   Create Profile
     ProfileController.prototype.createProfile = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var body, newProfile, err_3;
+            var body, newProfile, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -123,8 +115,8 @@ var ProfileController = /** @class */ (function () {
                         newProfile = _a.sent();
                         return [2 /*return*/, res.status(201).json({ data: newProfile })];
                     case 3:
-                        err_3 = _a.sent();
-                        console.error(err_3.message);
+                        err_2 = _a.sent();
+                        console.error(err_2.message);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];
@@ -136,7 +128,7 @@ var ProfileController = /** @class */ (function () {
     //   Edit Profile
     ProfileController.prototype.editProfile = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, body, editedProfile, err_4;
+            var id, body, editedProfile, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -149,8 +141,8 @@ var ProfileController = /** @class */ (function () {
                         editedProfile = _a.sent();
                         return [2 /*return*/, res.status(200).json(editedProfile)];
                     case 2:
-                        err_4 = _a.sent();
-                        console.error(err_4.mesage);
+                        err_3 = _a.sent();
+                        console.error(err_3.mesage);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];
@@ -162,7 +154,7 @@ var ProfileController = /** @class */ (function () {
     // Delete Profile
     ProfileController.prototype.deleteProfile = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, response, err_5;
+            var id, response, err_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -178,8 +170,8 @@ var ProfileController = /** @class */ (function () {
                                 .status(400)
                                 .json({ data: [{ msg: "Some thing wend wrong please try again" }] })];
                     case 2:
-                        err_5 = _a.sent();
-                        console.error(err_5.message);
+                        err_4 = _a.sent();
+                        console.error(err_4.message);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];

@@ -38,6 +38,10 @@ const UsersSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "profile"
     },
+    projects: {
+      type: [Schema.Types.ObjectId],
+      ref: "project"
+    },
     age: {
       type: Number,
       required: true
