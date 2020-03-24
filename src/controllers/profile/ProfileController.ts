@@ -27,7 +27,7 @@ const editUserProfile = new EditProfile();
 class ProfileController {
   // Get Profile
   @Get("/")
-  async getProfiles(req: Request, res: Response): Promise<Response> {
+  async getProfiles(req: Request, res: Response): Promise<Response | void> {
     try {
       res.redirect("profiles/perPage=20&page=1");
     } catch (err) {
