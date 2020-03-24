@@ -51,15 +51,60 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var decorators_1 = require("../../decorators");
 var multer_1 = __importDefault(require("../../services/multer/multer"));
 var AddProject_1 = require("../../database/project/AddProject");
+var GetProjects_1 = require("../../database/project/GetProjects");
+var checkProject_1 = require("../../middlewares/checkProject/checkProject");
+var DeleteProject_1 = require("../../database/project/DeleteProject");
 var createProject = new AddProject_1.CreateProject();
+var findProjects = new GetProjects_1.FindProjects();
+var deleteProjects = new DeleteProject_1.DeleteProject();
 var multer = new multer_1.default();
 var ProjectController = /** @class */ (function () {
     function ProjectController() {
     }
+    // Get Projects
+    ProjectController.prototype.getProjects = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                try {
+                    res.redirect("projects/perPage=20&page=1");
+                }
+                catch (err) {
+                    console.error(err.message);
+                    return [2 /*return*/, res
+                            .status(500)
+                            .json({ errors: [{ msg: "Internal Server Error" }] })];
+                }
+                return [2 /*return*/];
+            });
+        });
+    };
+    ProjectController.prototype.getProjectsPagination = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, page, perPage, projects, err_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        _a = req.params, page = _a.page, perPage = _a.perPage;
+                        return [4 /*yield*/, findProjects.findAllProjects(parseInt(perPage), parseInt(page))];
+                    case 1:
+                        projects = _b.sent();
+                        return [2 /*return*/, res.status(200).json({ data: projects })];
+                    case 2:
+                        err_1 = _b.sent();
+                        console.error(err_1.message);
+                        return [2 /*return*/, res
+                                .status(500)
+                                .json({ errors: [{ msg: "Internal Server Error" }] })];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     // Add Projects
     ProjectController.prototype.addProject = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var err_1;
+            var err_2;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -79,20 +124,87 @@ var ProjectController = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        err_1 = _a.sent();
-                        console.error(err_1.message);
+                        err_2 = _a.sent();
+                        console.error(err_2.message);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
+    //   Edit Project
+    ProjectController.prototype.editProjetc = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                try {
+                }
+                catch (err) {
+                    console.error(err.message);
+                }
+                return [2 /*return*/];
+            });
+        });
+    };
+    //   Delete Project
+    ProjectController.prototype.deleteProfile = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, response_1, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        id = req.params.id;
+                        return [4 /*yield*/, deleteProjects.deleteProject(id)];
+                    case 1:
+                        response_1 = _a.sent();
+                        if (!response_1) {
+                            return [2 /*return*/, res
+                                    .status(400)
+                                    .json({ data: [{ msg: "Something went wrong" }] })];
+                        }
+                        return [2 /*return*/, res.status(200).json({ data: [{ msg: "Profile Deleted" }] })];
+                    case 2:
+                        err_3 = _a.sent();
+                        console.error(err_3.message);
+                        return [2 /*return*/, res
+                                .status(500)
+                                .json({ errors: [{ msg: "Internal Server Error" }] })];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    __decorate([
+        decorators_1.Get("/"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:returntype", Promise)
+    ], ProjectController.prototype, "getProjects", null);
+    __decorate([
+        decorators_1.Get("/perPage=:perPage&page=:page"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:returntype", Promise)
+    ], ProjectController.prototype, "getProjectsPagination", null);
     __decorate([
         decorators_1.Post("/"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", Promise)
     ], ProjectController.prototype, "addProject", null);
+    __decorate([
+        decorators_1.Put("/:id"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Promise)
+    ], ProjectController.prototype, "editProjetc", null);
+    __decorate([
+        decorators_1.Delete("/:id"),
+        decorators_1.use(checkProject_1.checkProject),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:returntype", Promise)
+    ], ProjectController.prototype, "deleteProfile", null);
     ProjectController = __decorate([
         decorators_1.Controller("/projects")
     ], ProjectController);

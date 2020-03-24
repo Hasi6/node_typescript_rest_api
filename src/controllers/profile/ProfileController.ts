@@ -29,13 +29,7 @@ class ProfileController {
   @Get("/")
   async getProfiles(req: Request, res: Response): Promise<Response> {
     try {
-      const perPage: number = 20;
-      const page: number = 1;
-      const allProfile: IProfile[] = await findProfile.findAllProfiles(
-        perPage,
-        page
-      );
-      return res.status(200).json(allProfile);
+      res.redirect("profiles/perPage=20&page=1");
     } catch (err) {
       console.error(err.message);
       return res

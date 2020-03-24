@@ -109,7 +109,7 @@ var FindProjects = /** @class */ (function () {
                         msg = "Only " + pages + " pages found";
                         if (pages < page) {
                             if (page === 1) {
-                                msg = "No Profiles found";
+                                msg = "No Projects found";
                             }
                             return [2 /*return*/, { msg: msg }];
                         }

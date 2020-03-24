@@ -52,7 +52,7 @@ export class FindProjects {
       let msg = `Only ${pages} pages found`;
       if (pages < page) {
         if (page === 1) {
-          msg = "No Profiles found";
+          msg = "No Projects found";
         }
         return { msg };
       }

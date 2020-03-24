@@ -2,6 +2,9 @@ import { model } from "mongoose";
 import { ProjectType, IProject } from "../../models/Project";
 import { Request, Response } from "express";
 import fs from "fs";
+import { EditUser } from "../user/EditUser";
+
+const editUser = new EditUser();
 
 const Project = model<ProjectType>("project");
 
@@ -40,6 +43,9 @@ export class CreateProject {
 
       const newProject = new Project(project);
       await newProject.save();
+
+      await editUser.addProject(user, newProject._id);
+
       return res.status(201).json({ data: newProject });
     } catch (err) {
       console.error(err.message);

@@ -41,6 +41,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
 var fs_1 = __importDefault(require("fs"));
+var EditUser_1 = require("../user/EditUser");
+var editUser = new EditUser_1.EditUser();
 var Project = mongoose_1.model("project");
 var CreateProject = /** @class */ (function () {
     function CreateProject() {
@@ -52,7 +54,7 @@ var CreateProject = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _b.trys.push([0, 2, , 3]);
+                        _b.trys.push([0, 3, , 4]);
                         image = null;
                         if (req.file) {
                             image = fs_1.default.readFileSync("./uploads/" + req.file.originalname);
@@ -77,12 +79,15 @@ var CreateProject = /** @class */ (function () {
                         return [4 /*yield*/, newProject.save()];
                     case 1:
                         _b.sent();
-                        return [2 /*return*/, res.status(201).json({ data: newProject })];
+                        return [4 /*yield*/, editUser.addProject(user, newProject._id)];
                     case 2:
+                        _b.sent();
+                        return [2 /*return*/, res.status(201).json({ data: newProject })];
+                    case 3:
                         err_1 = _b.sent();
                         console.error(err_1.message);
                         return [2 /*return*/, null];
-                    case 3: return [2 /*return*/];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

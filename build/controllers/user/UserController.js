@@ -57,32 +57,24 @@ var UserController = /** @class */ (function () {
     // Default Users With Pagination
     UserController.prototype.getUsers = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var perPage, page, users, err_1;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        perPage = 20;
-                        page = 1;
-                        return [4 /*yield*/, findUser.findAllUsers(perPage, page)];
-                    case 1:
-                        users = _a.sent();
-                        return [2 /*return*/, res.status(200).json(users)];
-                    case 2:
-                        err_1 = _a.sent();
-                        console.error(err_1.message);
-                        return [2 /*return*/, res
-                                .status(500)
-                                .json({ errors: [{ msg: "Internal Server Error" }] })];
-                    case 3: return [2 /*return*/];
+                try {
+                    res.redirect("users/perPage=20&page=1");
                 }
+                catch (err) {
+                    console.error(err.message);
+                    return [2 /*return*/, res
+                            .status(500)
+                            .json({ errors: [{ msg: "Internal Server Error" }] })];
+                }
+                return [2 /*return*/];
             });
         });
     };
     //   Get User with Pagination
     UserController.prototype.getUsersWithPagination = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, perPage, page, users, err_2;
+            var _a, perPage, page, users, err_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -93,8 +85,8 @@ var UserController = /** @class */ (function () {
                         users = _b.sent();
                         return [2 /*return*/, res.status(200).json(users)];
                     case 2:
-                        err_2 = _b.sent();
-                        console.error(err_2.message);
+                        err_1 = _b.sent();
+                        console.error(err_1.message);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];
@@ -106,7 +98,7 @@ var UserController = /** @class */ (function () {
     //   Add User
     UserController.prototype.addUser = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, email, firstName, image, age, height, gender, user, newUser, response, err_3;
+            var _a, email, firstName, image, age, height, gender, user, newUser, response, err_2;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -141,8 +133,8 @@ var UserController = /** @class */ (function () {
                         response = _b.sent();
                         return [2 /*return*/, res.status(201).json({ newUser: response })];
                     case 4:
-                        err_3 = _b.sent();
-                        console.error(err_3.message);
+                        err_2 = _b.sent();
+                        console.error(err_2.message);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];
@@ -154,7 +146,7 @@ var UserController = /** @class */ (function () {
     //   Edit User
     UserController.prototype.ediUser = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, body, gender, user, editedUser, err_4;
+            var id, body, gender, user, editedUser, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -180,8 +172,8 @@ var UserController = /** @class */ (function () {
                         editedUser = _a.sent();
                         return [2 /*return*/, res.status(200).json({ editedUser: editedUser })];
                     case 3:
-                        err_4 = _a.sent();
-                        console.error(err_4.message);
+                        err_3 = _a.sent();
+                        console.error(err_3.message);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];
@@ -193,7 +185,7 @@ var UserController = /** @class */ (function () {
     //   Delete User
     UserController.prototype.deleteUser = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var message, id, user, isDeleted, err_5;
+            var message, id, user, isDeleted, err_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -214,8 +206,8 @@ var UserController = /** @class */ (function () {
                         }
                         return [2 /*return*/, res.status(200).json({ message: message })];
                     case 3:
-                        err_5 = _a.sent();
-                        console.error(err_5.message);
+                        err_4 = _a.sent();
+                        console.error(err_4.message);
                         return [2 /*return*/, res
                                 .status(500)
                                 .json({ errors: [{ msg: "Internal Server Error" }] })];
